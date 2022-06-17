@@ -30,17 +30,6 @@ class Qt_Agent:
         # if eps is high, it'll probably make a random choice from 0 to 3, else, it'll more probably take the highest Q in the array corresponding to the current state of the agent
         return choice
     
-    def update_Q(self, reward, s_prime, action):   
-        current_q = self.Q[self.state][action]
-        # Choose the highest reward actiona knowing we're in s_prime
-        max_next_q = max(self.Q[s_prime])
-        self.Q[self.state][action] = current_q + self.alpha*(reward + self.gamma*(max_next_q - current_q))
-        self.state = s_prime
-        if self.eps > self.eps_min :
-            self.eps = self.eps*self.eps_fact
-        # if we notice that eps is low enough, we stop decrementing it. Else, we decrement it by multiplying it by our decrement factor.
-        
-    
     def update(self,action,reward,stateprime):
         self.Q[self.state][action] += self.alpha * (reward + self.gamma*(np.amax(self.Q[stateprime]) - self.Q[self.state][action])) 
         # Q equation, derived from Bellman's
